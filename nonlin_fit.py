@@ -51,6 +51,28 @@ for i in range(len(x1)):
     dx1[i] = float(dx1[i])
     y1[i] = float(y1[i])
     dy1[i] = float(dy1[i])
+    
+# Convert lists to arrays so that plt.errorbar() can read them 
+x1_ary = np.array(x1)
+dx1_ary = np.array(dx1)
+y1_ary = np.array(y1)
+dy1_ary = np.array(dy1)
 
-out = minimize(fitfn, params, args=(x1, y1, dy1))
+
+out = minimize(fitfn, params, args=(x1_ary, y1_ary, dy1_ary))
+
+#Plot data as open-faced red circles
+plt.scatter(x1,y1,marker='o', facecolor = 'none', edgecolors='r')
+
+# Plot errorbars 
+# THE X ERROR BARS ARE THERE! they're just very small, you can see them if you set 'xerr = 40' or more)
+plt.errorbar(x1_ary, y1_ary, xerr = dx1_ary, yerr = dy1, linestyle = 'None', ecolor='green')
+
+# Assign plot title and axis labels.
+plt.title('PLOT TITLE')
+plt.xlabel('x axis label (units)')
+plt.ylabel('y axis label (units)')
+
+# Show the plot
+plt.show()
 
